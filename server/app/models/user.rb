@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :todo
   has_secure_password
   
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP } 
