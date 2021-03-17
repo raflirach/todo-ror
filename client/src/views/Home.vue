@@ -18,6 +18,9 @@ export default {
   methods: {
     fetchTodo () {
       this.$store.dispatch('fetchTodo')
+    },
+    checkTodo () {
+      this.$store.dispatch('checkTodo')
     }
   },
   computed: {
@@ -25,8 +28,9 @@ export default {
       return this.$store.state.isAdd
     }
   },
-  created () {
+  async created () {
     this.fetchTodo()
+    this.checkTodo()
   }
 }
 </script>

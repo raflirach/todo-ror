@@ -113,33 +113,58 @@ export default new Vuex.Store({
       } catch (err) {
         console.log(err.response.data)
       }
+    },
+    async checkTodo () {
+      try {
+        const { data } = await axios({
+          method: 'GET',
+          url: '/todos',
+          headers: {
+            'Access-Token': localStorage.access_token
+          }
+        })
+        let counter = 0
+        const newDate = new Date()
+        data.forEach(e => {
+          if (e.due_date.slice(0, 10) === newDate.toJSON().slice(0, 10) && !e.status) counter++
+        })
+        console.log(counter)
+      } catch (err) {
+        console.log(err.response.data)
+      }
     }
   },
   getters: {
     doneTodo: state => {
       if (state.doneSort === 'title') {
-        return state.todos.filter(todo => todo.status === true)
+        return state.todos
+          .filter(todo => todo.status === true)
           .sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
       } else {
-        return state.todos.filter(todo => todo.status === true)
+        return state.todos
+          .filter(todo => todo.status === true)
           .sort((a, b) => (a.due_date > b.due_date) ? 1 : ((b.due_date > a.due_date) ? -1 : 0))
       }
     },
     undoneTodo: state => {
       if (state.undoneSort === 'title') {
-        return state.todos.filter(todo => todo.status === false && todo.priority === false)
+        return state.todos
+          .filter(todo => todo.status === false && todo.priority === false)
           .sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
       } else {
-        return state.todos.filter(todo => todo.status === false && todo.priority === false)
+        return state.todos
+          .filter(todo => todo.status === false && todo.priority === false)
           .sort((a, b) => (a.due_date > b.due_date) ? 1 : ((b.due_date > a.due_date) ? -1 : 0))
       }
     },
     priorityTodo: state => {
       if (state.prioritySort === 'title') {
-        return state.todos.filter(todo => todo.status === false && todo.priority === true)
+        return state.todos
+          .filter(todo => todo.status === false && todo.priority === true)
           .sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
       } else {
-        return state.todos.filter(todo => todo.status === false && todo.priority === true)
+        return state.todos
+          .filter(todo => todo.status === false && todo.priority === true)
           .sort((a, b) => (a.due_date > b.due_date) ? 1 : ((b.due_date > a.due_date) ? -1 : 0))
       }
     }
