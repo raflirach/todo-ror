@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-screen flex flex-col pt-14">
     <navbar />
-    <todo-container :todos="todos"/>
+    <todo-container />
     <modal v-if="isAdd"/>
   </div>
 </template>
@@ -21,9 +21,6 @@ export default {
     }
   },
   computed: {
-    todos () {
-      return this.$store.state.todos
-    },
     isAdd () {
       return this.$store.state.isAdd
     }

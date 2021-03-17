@@ -8,7 +8,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     todos: [],
-    isAdd: false
+    isAdd: false,
+    prioritySort: '',
+    undoneSort: '',
+    doneSort: ''
   },
   mutations: {
     insertTodo (state, payload) {
@@ -16,6 +19,15 @@ export default new Vuex.Store({
     },
     changeIsAdd (state, payload) {
       state.isAdd = payload
+    },
+    changePrioritySort (state, payload) {
+      state.prioritySort = payload
+    },
+    changeUndoneSort (state, payload) {
+      state.undoneSort = payload
+    },
+    changeDoneSort (state, payload) {
+      state.doneSort = payload
     }
   },
   actions: {
@@ -100,6 +112,35 @@ export default new Vuex.Store({
         this.dispatch('fetchTodo')
       } catch (err) {
         console.log(err.response.data)
+      }
+    }
+  },
+  getters: {
+    doneTodo: state => {
+      if (state.doneSort === 'title') {
+        return state.todos.filter(todo => todo.status === true)
+          .sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
+      } else {
+        return state.todos.filter(todo => todo.status === true)
+          .sort((a, b) => (a.due_date > b.due_date) ? 1 : ((b.due_date > a.due_date) ? -1 : 0))
+      }
+    },
+    undoneTodo: state => {
+      if (state.undoneSort === 'title') {
+        return state.todos.filter(todo => todo.status === false && todo.priority === false)
+          .sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
+      } else {
+        return state.todos.filter(todo => todo.status === false && todo.priority === false)
+          .sort((a, b) => (a.due_date > b.due_date) ? 1 : ((b.due_date > a.due_date) ? -1 : 0))
+      }
+    },
+    priorityTodo: state => {
+      if (state.prioritySort === 'title') {
+        return state.todos.filter(todo => todo.status === false && todo.priority === true)
+          .sort((a, b) => (a.title > b.title) ? 1 : ((b.title > a.title) ? -1 : 0))
+      } else {
+        return state.todos.filter(todo => todo.status === false && todo.priority === true)
+          .sort((a, b) => (a.due_date > b.due_date) ? 1 : ((b.due_date > a.due_date) ? -1 : 0))
       }
     }
   }
