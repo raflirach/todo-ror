@@ -89,6 +89,6 @@ test:
 #
 production:
   <<: *default
-  database: todo_ror_production
-  username: todo_ror
-  password: <%= ENV['TODO_ROR_DATABASE_PASSWORD'] %>
+  database: <%= ENV['DATABASE_URL'] %>
+  # username: todo_ror
+  # password: <%= ENV['TODO_ROR_DATABASE_PASSWORD'] %>
