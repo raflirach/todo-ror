@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from '../api/axios'
+import { createAlert } from '../helpers/createAlert'
+import { createToast } from '../helpers/createToast'
 import router from '../router'
 
 Vue.use(Vuex)
@@ -42,6 +44,7 @@ export default new Vuex.Store({
             password
           }
         })
+        createToast('Register success')
         router.push('/login')
       } catch (err) {
         console.log(err.response.data)
@@ -61,7 +64,7 @@ export default new Vuex.Store({
         localStorage.access_token = data['Access-Token']
         router.push('/')
       } catch (err) {
-        console.log(err.response.data)
+        createAlert(err.response.data.status, 'error')
       }
     },
     async fetchTodo ({ commit }) {
@@ -110,6 +113,7 @@ export default new Vuex.Store({
           }
         })
         this.dispatch('fetchTodo')
+        createToast('delete success')
       } catch (err) {
         console.log(err.response.data)
       }
@@ -125,10 +129,11 @@ export default new Vuex.Store({
         })
         let counter = 0
         const newDate = new Date()
+        newDate.setHours(newDate.getHours() + 7)
         data.forEach(e => {
           if (e.due_date.slice(0, 10) === newDate.toJSON().slice(0, 10) && !e.status) counter++
         })
-        console.log(counter)
+        createAlert(`You Have ${counter} task to do today`, 'info')
       } catch (err) {
         console.log(err.response.data)
       }
