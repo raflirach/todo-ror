@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn-blue {
+  @apply bg-blue-500 px-2 rounded text-white text-sm shadow-md;
+}
+
+.btn-red {
+  @apply bg-red-500 px-2 rounded text-white text-sm shadow-md;
+}
+
+.btn-green {
+  @apply bg-green-500 px-2 rounded text-white text-sm shadow-md;
+}
+
+.card {
+  @apply border rounded w-full shadow-md text-left p-2 mb-2;
+}
+
+.input {
+  @apply border border-black my-1 p-1 rounded text-black text-sm;
+}

@@ -1,31 +1,25 @@
 <template>
   <div>
-    <div class="border rounded w-full shadow-md text-left p-2 mb-2" v-if="isEdit === todo.id">
-        <input type="text" placeholder="title" v-model="title" class="border border-black my-1 p-1 rounded text-black w-full text-sm" />
-        <input type="date" v-model="dueDate" class="border border-black my-1 p-1 rounded text-black text-sm" />
+    <div class="card" v-if="isEdit === todo.id">
+        <input type="text" placeholder="title" v-model="title" class="input w-full" />
+        <input type="date" v-model="dueDate" class="input" />
         <div class="flex gap-1">
-          <button
-            class="bg-blue-500 px-2 rounded text-white text-sm shadow-md"
-            @click="editTodo"
-          >save</button>
-          <button
-            class="bg-red-500 px-2 rounded text-white text-sm shadow-md"
-            @click="setIsEdit('')"
-          >cancel</button>
+          <button class="btn-blue" @click="editTodo">save</button>
+          <button class="btn-red" @click="setIsEdit('')">cancel</button>
         </div>
       </div>
-    <div v-else class="content relative border rounded w-full shadow-md text-left p-2 mb-2">
-      <div>{{ todo.title }}</div>
-      <div>{{ date }}</div>
+    <div v-else class="content relative card">
+      <div class="text-md">{{ todo.title }}</div>
+      <div class="text-sm text-gray-500">{{ date }}</div>
       <div class="option absolute top-1 right-2 flex gap-1">
         <button @click="setIsEdit(todo.id)"><i class="fas fa-pen"></i></button>
         <button @click="deleteTodo"><i class="fas fa-trash"></i></button>
       </div>
       <div class="option absolute bottom-1 right-2 flex gap-1">
-        <button @click="setPriority(false)" class="bg-red-500 rounded px-1 text-sm" v-if="!todo.status && todo.priority">unpriority</button>
-        <button @click="setPriority(true)" class="bg-blue-500 rounded px-1 text-sm" v-if="!todo.status && !todo.priority">set priority</button>
-        <button @click="markAsDone(true)" class="bg-green-500 rounded px-1 text-sm" v-if="!todo.status">mark as done</button>
-        <button @click="markAsDone(false)" class="bg-red-500 rounded px-1 text-sm" v-if="todo.status">undone</button>
+        <button @click="setPriority(false)" class="btn-red" v-if="!todo.status && todo.priority">unpriority</button>
+        <button @click="setPriority(true)" class="btn-blue" v-if="!todo.status && !todo.priority">set priority</button>
+        <button @click="markAsDone(true)" class="btn-green" v-if="!todo.status">mark as done</button>
+        <button @click="markAsDone(false)" class="btn-red" v-if="todo.status">undone</button>
       </div>
     </div>
   </div>
