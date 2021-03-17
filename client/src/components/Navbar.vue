@@ -1,6 +1,6 @@
 <template>
   <div class="h-12 w-full absolute top-0 shadow-md flex justify-between px-4 items-center">
-    <div>Todo</div>
+    <a @click="changeIsAdd">Todo</a>
     <a class="bg-blue-400 py-1 px-4 rounded shadow-md text-white font-bold cursor-pointer" @click="logout">Logout</a>
   </div>
 </template>
@@ -12,6 +12,9 @@ export default {
     logout () {
       localStorage.clear()
       this.$router.push('/login')
+    },
+    changeIsAdd () {
+      this.$store.commit('changeIsAdd', true)
     }
   }
 }
