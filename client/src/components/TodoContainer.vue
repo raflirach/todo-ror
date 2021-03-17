@@ -2,18 +2,35 @@
   <div class="w-full h-full grid grid-cols-3 gap-4 p-4">
     <div class="border rounded shadow-md px-4 py-2">
       <div class="mb-4">Undone</div>
-      <div>
-        <label>Sort by:</label>
-
-        <select v-model="undoneSort">
-          <option value="due_date">due date</option>
-          <option value="title">title</option>
-        </select>
+      <div class="flex justify-between mb-2">
+        <button
+          class="bg-blue-500 px-4 rounded text-white text-sm shadow-md"
+          @click="addUndone(true)"
+        ><i class="fas fa-plus"></i> Add</button>
+        <div>
+          <label>Sort by:</label>
+          <select v-model="undoneSort">
+            <option value="due_date">due date</option>
+            <option value="title">title</option>
+          </select>
+        </div>
+      </div>
+      <div class="border rounded w-full shadow-md text-left p-2 mb-2" v-if="isAddUndone">
+        <input type="text" placeholder="title" v-model="title" class="border border-black my-1 p-1 rounded text-black w-full text-sm" />
+        <input type="date" v-model="dueDate" class="border border-black my-1 p-1 rounded text-black text-sm" />
+        <div class="flex gap-1">
+          <button
+            class="bg-blue-500 px-2 rounded text-white text-sm shadow-md"
+            @click="addUndoneTodo"
+          >save</button>
+          <button
+            class="bg-red-500 px-2 rounded text-white text-sm shadow-md"
+            @click="addUndone(false)"
+          >cancel</button>
+        </div>
       </div>
       <div v-for="todo in undoneTodo" :key="todo.id">
-        <div v-if="!todo.status && !todo.priority">
-          <todo-card :todo="todo"/>
-        </div>
+        <todo-card :todo="todo"/>
       </div>
     </div>
     <div class="border rounded shadow-md px-4 py-2">
@@ -27,9 +44,7 @@
         </select>
       </div>
       <div v-for="todo in priorityTodo" :key="todo.id">
-        <div v-if="todo.priority && !todo.status">
-          <todo-card :todo="todo"/>
-        </div>
+        <todo-card :todo="todo"/>
       </div>
     </div>
     <div class="border rounded shadow-md px-4 py-2">
@@ -43,9 +58,7 @@
         </select>
       </div>
       <div v-for="todo in doneTodo" :key="todo.id">
-        <div v-if="todo.status">
-          <todo-card :todo="todo"/>
-        </div>
+        <todo-card :todo="todo"/>
       </div>
     </div>
   </div>
@@ -61,7 +74,10 @@ export default {
     return {
       prioritySort: 'due_date',
       undoneSort: 'due_date',
-      doneSort: 'due_date'
+      doneSort: 'due_date',
+      isAddUndone: false,
+      title: '',
+      dueDate: ''
     }
   },
   watch: {
@@ -73,6 +89,19 @@ export default {
     },
     doneSort (value) {
       this.$store.commit('changeDoneSort', value)
+    }
+  },
+  methods: {
+    addUndone (status) {
+      this.title = ''
+      this.dueDate = ''
+      this.isAddUndone = status
+    },
+    addUndoneTodo () {
+      const { title, dueDate } = this
+      const payload = { title, dueDate, status: false, priority: false }
+      this.$store.dispatch('addTodo', payload)
+      this.isAddUndone = false
     }
   },
   computed: {

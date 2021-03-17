@@ -132,6 +132,63 @@ export default new Vuex.Store({
       } catch (err) {
         console.log(err.response.data)
       }
+    },
+    async editTodo (_, payload) {
+      const { id, title, dueDate, status, priority } = payload
+      try {
+        await axios({
+          method: 'PUT',
+          url: `/todos/${id}`,
+          headers: {
+            'Access-Token': localStorage.access_token
+          },
+          data: {
+            title,
+            due_date: dueDate,
+            status,
+            priority
+          }
+        })
+        this.dispatch('fetchTodo')
+      } catch (err) {
+        console.log(err.response.data)
+      }
+    },
+    async markAsDone (_, payload) {
+      const { id, status } = payload
+      try {
+        await axios({
+          method: 'PATCH',
+          url: `/todos/${id}/status`,
+          headers: {
+            'Access-Token': localStorage.access_token
+          },
+          data: {
+            status
+          }
+        })
+        this.dispatch('fetchTodo')
+      } catch (err) {
+        console.log(err.response.data)
+      }
+    },
+    async setPriority (_, payload) {
+      const { id, priority } = payload
+      try {
+        await axios({
+          method: 'PATCH',
+          url: `/todos/${id}/priority`,
+          headers: {
+            'Access-Token': localStorage.access_token
+          },
+          data: {
+            priority
+          }
+        })
+        this.dispatch('fetchTodo')
+      } catch (err) {
+        console.log(err.response.data)
+      }
     }
   },
   getters: {
