@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const todoAPI = axios.create({
-  baseURL: 'http://localhost:3000'
+  baseURL: 'https://todo-ror-vue.herokuapp.com'
 })
 
 export default todoAPI
