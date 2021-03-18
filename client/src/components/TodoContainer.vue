@@ -1,12 +1,9 @@
 <template>
-  <div class="w-full h-full grid grid-cols-3 gap-4 p-4">
-    <div class="border rounded shadow-md px-4 py-2">
+  <div class="container-todo">
+    <div class="container-card">
       <div class="mb-4">Undone</div>
       <div class="flex justify-between mb-2">
-        <button
-          class="bg-blue-500 px-4 rounded text-white text-sm shadow-md"
-          @click="addUndone(true)"
-        ><i class="fas fa-plus"></i> Add</button>
+        <button class="btn-blue" @click="addUndone(true)"><i class="fas fa-plus"></i> Add</button>
         <div>
           <label>Sort by:</label>
           <select v-model="undoneSort">
@@ -15,27 +12,21 @@
           </select>
         </div>
       </div>
-      <div class="border rounded w-full shadow-md text-left p-2 mb-2" v-if="isAddUndone">
-        <input type="text" placeholder="title" v-model="title" class="border border-black my-1 p-1 rounded text-black w-full text-sm" />
-        <input type="date" v-model="dueDate" class="border border-black my-1 p-1 rounded text-black text-sm" />
+      <div class="container-add" v-if="isAddUndone">
+        <input type="text" placeholder="title" v-model="title" class="input w-full" />
+        <input type="date" v-model="dueDate" class="input" />
         <div class="flex gap-1">
-          <button
-            class="bg-blue-500 px-2 rounded text-white text-sm shadow-md"
-            @click="addUndoneTodo"
-          >save</button>
-          <button
-            class="bg-red-500 px-2 rounded text-white text-sm shadow-md"
-            @click="addUndone(false)"
-          >cancel</button>
+          <button class="btn-blue" @click="addUndoneTodo">save</button>
+          <button class="btn-red" @click="addUndone(false)">cancel</button>
         </div>
       </div>
       <div v-for="todo in undoneTodo" :key="todo.id">
         <todo-card :todo="todo"/>
       </div>
     </div>
-    <div class="border rounded shadow-md px-4 py-2">
+    <div class="container-card">
       <div class="mb-4">Priority</div>
-      <div>
+      <div class="mb-2">
         <label>Sort by:</label>
 
         <select v-model="prioritySort">
@@ -47,9 +38,9 @@
         <todo-card :todo="todo"/>
       </div>
     </div>
-    <div class="border rounded shadow-md px-4 py-2">
+    <div class="container-card">
       <div class="mb-4">Done</div>
-      <div>
+      <div class="mb-2">
         <label>Sort by:</label>
 
         <select v-model="doneSort">
