@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full h-screen bg-black absolute z-10 top-0 opacity-70 flex justify-center items-center">
-    <div class="bg-white w-1/2 z-20 flex flex-col rounded p-4">
+  <div class="modal-container">
+    <div class="modal-content">
       <div>Add Todo</div>
-      <input type="text" placeholder="title" v-model="title" class="border border-black my-1 p-2 rounded text-black" />
-      <input type="date" v-model="dueDate" class="border border-black my-1 p-2 rounded text-black" />
+      <input type="text" placeholder="title" v-model="title" class="input" />
+      <input type="date" v-model="dueDate" class="input" />
       <div>
         <input type="checkbox" v-model="status" value="true">
         <label> Status</label>
@@ -13,8 +13,8 @@
         <label> Priority</label>
       </div>
       <div class="flex gap-4 justify-center">
-        <button class="bg-blue-500 w-24 py-1 text-white rounded" @click="addTodo">Add</button>
-        <button class="bg-red-500 w-24 py-1 text-white rounded" @click="cancel">Cancel</button>
+        <button class="btn-blue" @click="addTodo">Add</button>
+        <button class="btn-red" @click="cancel">Cancel</button>
       </div>
     </div>
   </div>

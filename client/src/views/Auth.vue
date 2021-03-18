@@ -1,5 +1,11 @@
 <template>
-  <div class="w-full h-screen flex justify-center items-center">
+  <div class="auth-container">
     <router-view />
   </div>
 </template>
+
+<script>
+export default {
+  name: 'Auth'
+}
+</script>
